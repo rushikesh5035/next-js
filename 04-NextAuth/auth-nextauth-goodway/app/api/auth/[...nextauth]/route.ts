@@ -1,10 +1,13 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+// import GoogleProvider from "next-auth/providers/google";
+// import GitHubProvider from "next-auth/providers/github";
+console.log(process.env.NEXTAUTH_SECRET);
 
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Login with email",
+      name: "Email",
       credentials: {
         username: {
           label: "Username",
@@ -13,25 +16,17 @@ const handler = NextAuth({
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials, req) {
-        const username = credentials?.username;
-        const password = credentials?.password;
-
-        //db req to check if this username andd pass are correcct
-        return (user = {
+        return {
           name: "rushikesh",
-          id: 1,
-          username: "rushikesh@gmail.com",
-        });
-
-        if (user) {
-          return username;
-        } else {
-          return null;
-        }
+          id: "1",
+          email: "rushikesh@gmail.com",
+        };
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
